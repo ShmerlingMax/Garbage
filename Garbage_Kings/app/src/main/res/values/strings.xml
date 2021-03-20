@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Garbage Kings</string>
+    <string name="app_in_name">Мусорные Короли</string>
+    <string name="app_name_after">Тип это стриница регистрации</string>
+    <string name="text_button">Тип тоже какая-то надпись</string>
+    <string name="btnSignIn">Войти</string>
+    <string name="btnRegistration">Зарегистрироваться</string>
+    <string name="emailHint">Адрес электронной почты</string>
+    <string name="passwordHint">Пароль</string>
+    <string name="nameHint">Имя</string>
+    <string name="phoneHint">Номер телефона</string>
+</resources>
