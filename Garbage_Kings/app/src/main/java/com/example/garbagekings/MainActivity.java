@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         btnSignIn = findViewById(R.id.btnSignIn);
         btnRegistration = findViewById(R.id.btnRegistration);
 
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                startActivity(new Intent(com.example.garbagekings.MainActivity.this, com.example.garbagekings.MapActivity.class));
+                                startActivity(new Intent(com.example.garbagekings.MainActivity.this, com.example.garbagekings.MenuActivity.class));
                                 finish();
                             }
                         })
@@ -117,8 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void showRegistrationWindow() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Зарегистрироваться");
-        dialog.setMessage("Введите все данные для регистрации");
+        dialog.setTitle("Регистрация");
+        dialog.setMessage("Введите данные для регистрации");
 
         LayoutInflater inflater = LayoutInflater.from(this);
         View registrationWindow = inflater.inflate(R.layout.registration_window, null);
