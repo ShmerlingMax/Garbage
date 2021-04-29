@@ -2,29 +2,36 @@ package com.example.garbagekings.Modules;
 
 public class User {
     private String name, email, password, phone;
-    public User(){};
-    public User(String name, String email, String password, String phone)
-    {
+    private int bonus;
+
+    public User() {};
+
+    public User(String name, String email, String password, String phone, int bonus) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phone = phone;
+        this.bonus = bonus;
     }
-    public String getName()
-    {
+
+    public String getName() {
         return name;
     }
-    public String getEmail()
-    {
+
+    public String getEmail() {
         return email;
     }
-    public String getPassword()
-    {
+
+    public String getPassword() {
         return password;
     }
-    public String getPhone()
-    {
+
+    public String getPhone() {
         return phone;
+    }
+
+    public int getBonus() {
+        return bonus;
     }
 
     public void setName(String name) {
@@ -41,5 +48,9 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setBonus(int bonus) {
+        this.bonus = bonus;
     }
 }

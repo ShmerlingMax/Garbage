@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
                                 user.setEmail(email.getText().toString());
                                 user.setPassword(password.getText().toString());
                                 user.setPhone(phone.getText().toString());
+                                user.setBonus(100);
 
                                 users.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                         .setValue(user)
