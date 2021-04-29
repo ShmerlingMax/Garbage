@@ -9,7 +9,7 @@
     <string name="passwordHint">Пароль</string>
     <string name="nameHint">Имя</string>
     <string name="phoneHint">Номер телефона</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Карта</string>
     <string name="title_activity_menu">MainActivity</string>
     <string name="title_map">Карта</string>
     <string name="title_order">Заказы</string>
