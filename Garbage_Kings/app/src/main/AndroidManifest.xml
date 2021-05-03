@@ -15,11 +15,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.GarbageKings">
-        <activity android:name=".OrderActivity"></activity>
-        <activity android:name=".ProfileActivity" />
         <activity
-                android:name=".MenuActivity"
-                android:label="@string/title_activity_menu" />
+                android:name=".MenuActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -34,8 +31,7 @@
 
         <activity
                 android:name=".MapsActivity"
-                android:label="@string/title_activity_maps"
-                android:theme="@android:style/Theme.NoTitleBar"/>
+                android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
         <activity
                 android:name=".MainActivity"
                 android:theme="@style/Theme.Design.NoActionBar">
