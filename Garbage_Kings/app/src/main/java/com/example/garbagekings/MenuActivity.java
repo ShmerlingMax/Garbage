@@ -23,7 +23,6 @@ public class MenuActivity extends AppCompatActivity {
                 R.id.navigation_map, R.id.navigation_order, R.id.navigation_profile)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
 
