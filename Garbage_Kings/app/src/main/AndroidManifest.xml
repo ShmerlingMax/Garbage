@@ -25,11 +25,6 @@ package="com.example.garbagekings">
          sign the APK for publishing.
          You can define the keys for the debug and release targets in src/debug/ and src/release/.
     -->
-
-    <activity
-        android:name=".SettingsActivity"
-        android:label="@string/title_activity_settings"></activity>
-
     <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="@string/google_maps_key" />
@@ -45,6 +40,12 @@ package="com.example.garbagekings">
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+    </activity>
+
+    <activity
+        android:name=".SettingsActivity"
+        android:label="@string/title_activity_settings">
+
     </activity>
 </application>
 
