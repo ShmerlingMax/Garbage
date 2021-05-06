@@ -56,4 +56,5 @@ dependencies {
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     androidTestImplementation 'org.junit.jupiter:junit-jupiter'
     implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 }
