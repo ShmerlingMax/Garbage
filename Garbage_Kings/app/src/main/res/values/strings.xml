@@ -15,6 +15,7 @@
     <string name="title_order">Заказы</string>
     <string name="title_profile">Профиль</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="create_order">Создать заказ</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -38,4 +39,14 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <!-- Strings to create order -->
+    <string name="address_label">Адрес</string>
+    <string name="garbage_type_label">Тип мусора</string>
+    <string name="comment_label">Комментарий к заказу</string>
+    <string name="enter_address">Введите адрес</string>
+    <string name="enter_garbage_type">Укажите тип мусора</string>
+    <string name="enter_comment">Напишите комментарий</string>
+    <string name="confirm_order">Подтвердить заказ</string>
+
 </resources>
