@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -88,4 +89,9 @@ public class MenuActivity extends AppCompatActivity implements BottomNavigationV
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+    /*public void onMapSearch(View view) {
+        MapsActivity mapFragment = new MapsActivity();
+        mapFragment.onMapSearch(view);
+    }*/
 }

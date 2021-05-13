@@ -2,15 +2,32 @@ package com.example.garbagekings;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.garbagekings.Modules.PlacesAutoCompleteAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,10 +40,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.example.garbagekings.R;
 
-public class MapsActivity extends SupportMapFragment implements OnMapReadyCallback {
+import java.io.IOException;
+import java.util.List;
+
+public class MapsActivity extends Fragment implements OnMapReadyCallback, PlacesAutoCompleteAdapter.ClickListener {
 
     private GoogleMap mMap;
+    SupportMapFragment mapFragment;
     private MapView mapView;
     private boolean locationPermissionGranted;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -38,6 +62,30 @@ public class MapsActivity extends SupportMapFragment implements OnMapReadyCallba
     private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final String TAG = MapsActivity.class.getSimpleName();
+    private PlacesAutoCompleteAdapter mAutoCompleteAdapter;
+    private RecyclerView recyclerView;
+    private EditText locationSearch;
+    private ImageButton searchButton;
+
+
+
+
+    @NonNull
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View v = inflater.inflate(R.layout.activity_maps, container, false);
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        locationSearch = (EditText) view.findViewById(R.id.editText);
+        searchButton = (ImageButton) view.findViewById(R.id.search_button);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,11 +94,8 @@ public class MapsActivity extends SupportMapFragment implements OnMapReadyCallba
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-
-        getMapAsync(this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());;
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -77,6 +122,30 @@ public class MapsActivity extends SupportMapFragment implements OnMapReadyCallba
 
                 // Placing a marker on the touched position
                 googleMap.addMarker(markerOptions);
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String location = locationSearch.getText().toString();
+                List<Address> addressList = null;
+
+                if (location != null && !location.equals("")) {
+                    Geocoder geocoder = new Geocoder(getActivity());
+                    try {
+                        addressList = geocoder.getFromLocationName(location, 1);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (!addressList.isEmpty()) {
+                        Address address = addressList.get(0);
+                        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                        mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                    }
+                }
             }
         });
         getLocationPermission();
@@ -109,6 +178,24 @@ public class MapsActivity extends SupportMapFragment implements OnMapReadyCallba
         }
         updateLocationUI();
     }
+
+    @Override
+    public void click(Place place) {
+        Toast.makeText(getActivity(), place.getAddress()+", "+place.getLatLng().latitude+place.getLatLng().longitude, Toast.LENGTH_SHORT).show();
+    }
+
+    private TextWatcher filterTextWatcher = new TextWatcher() {
+        public void afterTextChanged(Editable s) {
+            if (!s.toString().equals("")) {
+                mAutoCompleteAdapter.getFilter().filter(s.toString());
+                if (recyclerView.getVisibility() == View.GONE) {recyclerView.setVisibility(View.VISIBLE);}
+            } else {
+                if (recyclerView.getVisibility() == View.VISIBLE) {recyclerView.setVisibility(View.GONE);}
+            }
+        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+    };
 
     private void getLocationPermission() {
         /*
@@ -177,6 +264,25 @@ public class MapsActivity extends SupportMapFragment implements OnMapReadyCallba
             }
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage(), e);
+        }
+    }
+
+    public void onMapSearch(View view) {
+        String location = locationSearch.getText().toString();
+        List<Address> addressList = null;
+
+        if (location != null || !location.equals("")) {
+            Geocoder geocoder = new Geocoder(getActivity());
+            try {
+                addressList = geocoder.getFromLocationName(location, 1);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Address address = addressList.get(0);
+            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         }
     }
 

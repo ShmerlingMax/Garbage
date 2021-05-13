@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+            android:id="@+id/place_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_toLeftOf="@+id/iv_fav"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginRight="15dp">
+
+        <TextView
+                android:id="@+id/place_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lledt"
+                android:layout_marginStart="15dp"
+                android:layout_toRightOf="@+id/iv_place"
+                android:text="Marol Naka,Andheri East,Mumbai"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"/>
+
+
+        <LinearLayout
+                android:id="@+id/lledt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_toRightOf="@+id/iv_place"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginLeft="15dp">
+
+
+            <EditText
+                    android:id="@+id/place_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:focusable="true"
+                    android:text="Home"
+                    android:textSize="12dp" />
+
+            <RelativeLayout
+
+                    android:id="@+id/ivEdit"
+                    android:layout_width="4dp"
+                    android:layout_height="12dp">
+
+                <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="10dp"
+                        android:scaleType="center"
+                        android:layout_marginLeft="10dp" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/ivSave"
+                    android:layout_width="45dp"
+                    android:layout_height="12dp">
+
+                <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="10dp"
+                        android:scaleType="center"
+                        android:layout_marginLeft="10dp" />
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+        <ImageView
+                android:id="@+id/iv_place"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                />
+
+
+    </RelativeLayout>
+
+    <ImageView
+            android:id="@+id/iv_fav"
+            android:layout_width="7dp"
+            android:layout_height="17dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp" />
+
+
+    <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/place_item_view"
+            android:layout_marginTop="3dp"
+            tools:ignore="UnknownId" />
+
+</RelativeLayout>
