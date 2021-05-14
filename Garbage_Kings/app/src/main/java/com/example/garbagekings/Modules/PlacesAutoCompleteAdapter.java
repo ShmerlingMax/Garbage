@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.garbagekings.MapsActivity;
 import com.example.garbagekings.R;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,12 +50,17 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
     private CharacterStyle STYLE_NORMAL;
     private final PlacesClient placesClient;
     private ClickListener clickListener;
+    private EditText editText;
 
     public PlacesAutoCompleteAdapter(Context context) {
         mContext = context;
         STYLE_BOLD = new StyleSpan(Typeface.BOLD);
         STYLE_NORMAL = new StyleSpan(Typeface.NORMAL);
         placesClient = com.google.android.libraries.places.api.Places.createClient(context);
+    }
+
+    public void setEditText(EditText editText) {
+        this.editText = editText;
     }
 
     public void setClickListener(ClickListener clickListener) {
@@ -174,36 +181,19 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
 
         PredictionHolder(View itemView) {
             super(itemView);
-            //area = itemView.findViewById(R.id.place_area);
             address = itemView.findViewById(R.id.place_address);
-            //mRow = itemView.findViewById(R.id.place_address);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            PlaceAutocomplete item = mResultList.get(getAdapterPosition());
-            if (v.getId() == R.id.place_address) {
-
-                String placeId = String.valueOf(item.placeId);
-
-                List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS);
-                FetchPlaceRequest request = FetchPlaceRequest.builder(placeId, placeFields).build();
-                placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
-                    @Override
-                    public void onSuccess(FetchPlaceResponse response) {
-                        Place place = response.getPlace();
-                        clickListener.click(place);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        if (exception instanceof ApiException) {
-                            Toast.makeText(mContext, exception.getMessage() + "", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+            try {
+                PlaceAutocomplete item = mResultList.get(getAdapterPosition());
+                editText.setText(address.getText());
+                editText.setSelection(editText.getText().length());
             }
+            catch (IndexOutOfBoundsException ignored)
+            {}
         }
     }
 

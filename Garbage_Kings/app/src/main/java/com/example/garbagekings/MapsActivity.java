@@ -46,6 +46,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -77,6 +78,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
     private EditText locationSearch;
     private ImageButton searchButton;
     private View mapElement;
+    Boolean markerClick = false;
 
 
 
@@ -104,6 +106,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         locationSearch = (EditText) view.findViewById(R.id.editText);
+        mAutoCompleteAdapter.setEditText(locationSearch);
         searchButton = (ImageButton) view.findViewById(R.id.search_button);
         mapElement = view.findViewById(R.id.mapElement);
     }
@@ -134,7 +137,41 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
 
                 // Setting the title for the marker.
                 // This will be displayed on taping the marker
-                markerOptions.title(latLng.latitude + " : " + latLng.longitude);
+                List<Address> addressList = null;
+                Geocoder geocoder = new Geocoder(getActivity());
+                try {
+                    addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (!addressList.isEmpty()) {
+                    Address address = addressList.get(0);
+                    String thoroughfare = null;
+                    String subThoroughfare = null;
+                    if (address.getThoroughfare() == null)
+                    {
+                        thoroughfare = "";
+                    }
+                    else
+                    {
+                        thoroughfare = address.getThoroughfare();
+                    }
+                    if (address.getSubThoroughfare() == null)
+                    {
+                        subThoroughfare = "";
+                    }
+                    else
+                    {
+                        subThoroughfare = ", " + address.getSubThoroughfare();
+                    }
+                    if (thoroughfare.equals("") && subThoroughfare.equals(""))
+                    {
+                        markerOptions.title(address.getLocality());
+                    }
+                    else {
+                        markerOptions.title(thoroughfare + subThoroughfare);
+                    }
+                }
 
                 // Clears the previously touched position
                 googleMap.clear();
@@ -143,7 +180,9 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
                 googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
                 // Placing a marker on the touched position
+                markerOptions.draggable(true);
                 googleMap.addMarker(markerOptions);
+                markerClick = false;
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 try {
                     imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),0);
@@ -155,6 +194,8 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
                 locationSearch.clearFocus();
                 recyclerView.setVisibility(View.GONE);
             }
+
+
         });
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -184,8 +225,33 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
                     }
                     if (!addressList.isEmpty()) {
                         Address address = addressList.get(0);
+                        String thoroughfare = null;
+                        String subThoroughfare = null;
+                        if (address.getThoroughfare() == null)
+                        {
+                            thoroughfare = "";
+                        }
+                        else {
+                            thoroughfare = address.getThoroughfare();
+                        }
+                        if (address.getSubThoroughfare() == null)
+                        {
+                            subThoroughfare = "";
+                        }
+                        else {
+                            subThoroughfare = ", " + address.getSubThoroughfare();
+                        }
                         LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                        mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+                        mMap.clear();
+                        if (thoroughfare.equals("") && subThoroughfare.equals(""))
+                        {
+                            mMap.addMarker(new MarkerOptions().position(latLng).draggable(true).title(address.getLocality()));
+                            markerClick = false;
+                        }
+                        else {
+                            mMap.addMarker(new MarkerOptions().position(latLng).draggable(true).title(thoroughfare + subThoroughfare));
+                            markerClick = false;
+                        }
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                     }
                     else
@@ -230,6 +296,76 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
                 if(hasFocus){
                     recyclerView.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                if (markerClick)
+                {
+                    marker.hideInfoWindow();
+                    markerClick = false;
+                }
+                else
+                {
+                    marker.showInfoWindow();
+                    markerClick = true;
+                }
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+                return true;
+            }
+        });
+
+        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(@NonNull Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDrag(@NonNull Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDragEnd(@NonNull Marker marker) {
+                List<Address> addressList = null;
+                Geocoder geocoder = new Geocoder(getActivity());
+                try {
+                    addressList = geocoder.getFromLocation(marker.getPosition().latitude, marker.getPosition().longitude,  1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (!addressList.isEmpty()) {
+                    Address address = addressList.get(0);
+                    String thoroughfare = null;
+                    String subThoroughfare = null;
+                    if (address.getThoroughfare() == null)
+                    {
+                        thoroughfare = "";
+                    }
+                    else
+                    {
+                        thoroughfare = address.getThoroughfare();
+                    }
+                    if (address.getSubThoroughfare() == null)
+                    {
+                        subThoroughfare = "";
+                    }
+                    else
+                    {
+                        subThoroughfare = ", " + address.getSubThoroughfare();
+                    }
+                    if (thoroughfare.equals("") && subThoroughfare.equals(""))
+                    {
+                        marker.setTitle(address.getLocality());
+                    }
+                    else {
+                        marker.setTitle(thoroughfare + subThoroughfare);
+                    }
+                }
+
             }
         });
         getLocationPermission();

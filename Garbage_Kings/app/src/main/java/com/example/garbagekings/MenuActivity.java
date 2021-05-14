@@ -89,9 +89,4 @@ public class MenuActivity extends AppCompatActivity implements BottomNavigationV
     public void onBackPressed() {
         super.onBackPressed();
     }
-
-    /*public void onMapSearch(View view) {
-        MapsActivity mapFragment = new MapsActivity();
-        mapFragment.onMapSearch(view);
-    }*/
 }
