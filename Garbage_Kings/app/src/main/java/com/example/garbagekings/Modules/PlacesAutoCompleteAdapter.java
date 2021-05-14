@@ -155,7 +155,8 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
     @Override
     public void onBindViewHolder(@NonNull PredictionHolder mPredictionHolder, final int i) {
         mPredictionHolder.address.setText(mResultList.get(i).address);
-        mPredictionHolder.area.setText(mResultList.get(i).area);
+        //mPredictionHolder.area.setText(mResultList.get(i).area);
+        System.out.println("wefwefewfewweffew    " + i);
     }
 
     @Override
@@ -173,16 +174,16 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
 
         PredictionHolder(View itemView) {
             super(itemView);
-            area = itemView.findViewById(R.id.place_area);
+            //area = itemView.findViewById(R.id.place_area);
             address = itemView.findViewById(R.id.place_address);
-            mRow = itemView.findViewById(R.id.place_item_view);
+            //mRow = itemView.findViewById(R.id.place_address);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             PlaceAutocomplete item = mResultList.get(getAdapterPosition());
-            if (v.getId() == R.id.place_item_view) {
+            if (v.getId() == R.id.place_address) {
 
                 String placeId = String.valueOf(item.placeId);
 

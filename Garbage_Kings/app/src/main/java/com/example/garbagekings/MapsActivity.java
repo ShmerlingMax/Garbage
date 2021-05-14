@@ -1,22 +1,31 @@
 package com.example.garbagekings;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +52,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.example.garbagekings.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.List;
@@ -66,6 +76,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
     private RecyclerView recyclerView;
     private EditText locationSearch;
     private ImageButton searchButton;
+    private View mapElement;
 
 
 
@@ -76,6 +87,15 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.activity_maps, container, false);
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        Places.initialize(getActivity(), getResources().getString(R.string.google_maps_key));
+        recyclerView = (RecyclerView) v.findViewById(R.id.places_recycler_view);
+        ((EditText) v.findViewById(R.id.editText)).addTextChangedListener(filterTextWatcher);
+
+        mAutoCompleteAdapter = new PlacesAutoCompleteAdapter(getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAutoCompleteAdapter.setClickListener(this);
+        recyclerView.setAdapter(mAutoCompleteAdapter);
+        mAutoCompleteAdapter.notifyDataSetChanged();
         mapFragment.getMapAsync(this);
         return v;
     }
@@ -85,6 +105,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
         super.onViewCreated(view, savedInstanceState);
         locationSearch = (EditText) view.findViewById(R.id.editText);
         searchButton = (ImageButton) view.findViewById(R.id.search_button);
+        mapElement = view.findViewById(R.id.mapElement);
     }
 
     @Override
@@ -94,7 +115,8 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());;
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
     }
 
     @Override
@@ -122,12 +144,33 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
 
                 // Placing a marker on the touched position
                 googleMap.addMarker(markerOptions);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                try {
+                    imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),0);
+                }
+                catch (NullPointerException ignored)
+                {
+                    imm.hideSoftInputFromWindow(locationSearch.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                }
+                locationSearch.clearFocus();
+                recyclerView.setVisibility(View.GONE);
             }
         });
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                locationSearch.clearFocus();
+                recyclerView.setVisibility(View.GONE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                try {
+                    imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),0);
+                }
+                catch (NullPointerException e)
+                {
+                    imm.hideSoftInputFromWindow(locationSearch.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                }
+
                 String location = locationSearch.getText().toString();
                 List<Address> addressList = null;
 
@@ -145,6 +188,47 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
                         mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                     }
+                    else
+                    {
+                        Snackbar mSnackbar = Snackbar.make(mapElement, "Не удалось найти адресс", Snackbar.LENGTH_SHORT);
+                        View mView = mSnackbar.getView();
+                        Snackbar.SnackbarLayout lp = (Snackbar.SnackbarLayout) mView;
+                        lp.setForegroundGravity(Gravity.CENTER);
+                        mView.setBackgroundColor(Color.WHITE);
+                        TextView mTextView = (TextView) mView.findViewById(R.id.snackbar_text);
+                        mTextView.setTextColor(Color.BLACK);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                            mTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        else
+                            mTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+
+                        mSnackbar.show();
+                    }
+                }
+                else
+                {
+                    Snackbar mSnackbar = Snackbar.make(mapElement, "Не удалось найти адресс", Snackbar.LENGTH_SHORT);
+                    View mView = mSnackbar.getView();
+                    Snackbar.SnackbarLayout lp = (Snackbar.SnackbarLayout) mView;
+                    lp.setForegroundGravity(Gravity.CENTER);
+                    mView.setBackgroundColor(Color.WHITE);
+                    TextView mTextView = (TextView) mView.findViewById(R.id.snackbar_text);
+                    mTextView.setTextColor(Color.BLACK);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                        mTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    else
+                        mTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+                    mSnackbar.show();
+                }
+            }
+        });
+
+        locationSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    recyclerView.setVisibility(View.VISIBLE);
                 }
             }
         });
