@@ -11,8 +11,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:orientation="horizontal">
-
         <EditText
+                android:imeOptions="actionSearch"
                 android:drawableLeft="@drawable/places_ic_search"
                 android:id="@+id/editText"
                 android:layout_width="0dp"

@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -229,6 +230,100 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
                     intent.putExtra("address", stringAddress);
                     startActivity(intent);
                 }
+            }
+        });
+
+        locationSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                locationSearch.clearFocus();
+                recyclerView.setVisibility(View.GONE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                try {
+                    imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),0);
+                }
+                catch (NullPointerException e)
+                {
+                    imm.hideSoftInputFromWindow(locationSearch.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                }
+
+                String location = locationSearch.getText().toString();
+                List<Address> addressList = null;
+
+                if (location != null && !location.equals("")) {
+                    Geocoder geocoder = new Geocoder(getActivity());
+                    try {
+                        addressList = geocoder.getFromLocationName(location, 1);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (!addressList.isEmpty()) {
+                        Address address = addressList.get(0);
+                        String thoroughfare = null;
+                        String subThoroughfare = null;
+                        if (address.getThoroughfare() == null)
+                        {
+                            thoroughfare = "";
+                        }
+                        else {
+                            thoroughfare = address.getThoroughfare();
+                        }
+                        if (address.getSubThoroughfare() == null)
+                        {
+                            subThoroughfare = "";
+                        }
+                        else {
+                            subThoroughfare = ", " + address.getSubThoroughfare();
+                        }
+                        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                        mMap.clear();
+                        if (thoroughfare.equals("") && subThoroughfare.equals(""))
+                        {
+                            currentMarker = mMap.addMarker(new MarkerOptions().position(latLng).draggable(true).title(address.getLocality()));
+                            markerClick = false;
+                            orderButton.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            currentMarker = mMap.addMarker(new MarkerOptions().position(latLng).draggable(true).title(thoroughfare + subThoroughfare));
+                            markerClick = false;
+                            orderButton.setVisibility(View.VISIBLE);
+                        }
+                        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                    }
+                    else
+                    {
+                        Snackbar mSnackbar = Snackbar.make(mapElement, "Не удалось найти адресс", Snackbar.LENGTH_SHORT);
+                        View mView = mSnackbar.getView();
+                        Snackbar.SnackbarLayout lp = (Snackbar.SnackbarLayout) mView;
+                        lp.setForegroundGravity(Gravity.CENTER);
+                        mView.setBackgroundColor(Color.WHITE);
+                        TextView mTextView = (TextView) mView.findViewById(R.id.snackbar_text);
+                        mTextView.setTextColor(Color.BLACK);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                            mTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        else
+                            mTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+
+                        mSnackbar.show();
+                    }
+                }
+                else
+                {
+                    Snackbar mSnackbar = Snackbar.make(mapElement, "Не удалось найти адресс", Snackbar.LENGTH_SHORT);
+                    View mView = mSnackbar.getView();
+                    Snackbar.SnackbarLayout lp = (Snackbar.SnackbarLayout) mView;
+                    lp.setForegroundGravity(Gravity.CENTER);
+                    mView.setBackgroundColor(Color.WHITE);
+                    TextView mTextView = (TextView) mView.findViewById(R.id.snackbar_text);
+                    mTextView.setTextColor(Color.BLACK);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                        mTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    else
+                        mTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+                    mSnackbar.show();
+                }
+                return false;
             }
         });
 
