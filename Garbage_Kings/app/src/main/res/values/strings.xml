@@ -28,8 +28,8 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="profile_settings_header">Профиль</string>
+    <string name="screen_header">Экран</string>
 
     <!-- Messages Preferences -->
     <string name="signature_title">Your signature</string>
@@ -42,6 +42,10 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
+    <!-- Screen Preference -->
+    <string name="font_title">Шрифт</string>
+    <string name="theme_mode_title">Тема</string>
+
     <!-- Strings to create order -->
     <string name="address_label">Адрес</string>
     <string name="garbage_type_label">Тип мусора</string>
@@ -50,5 +54,20 @@
     <string name="enter_garbage_type">Укажите тип мусора</string>
     <string name="enter_comment">Напишите комментарий</string>
     <string name="confirm_order">Подтвердить заказ</string>
+
+    <!-- Profile performance -->
+    <string name="password_change">Изменить пароль</string>
+
+    <!-- Strings for screen settings -->
+
+    <!-- Font -->
+    <string name="font_big">Большой</string>
+    <string name="font_average">Средний</string>
+    <string name="font_small">Маленький</string>
+
+    <!-- Theme mode -->
+    <string name="dark_mode">Тёмная</string>
+    <string name="light_mode">Светалая</string>
+    <string name="android_theme_mode">По умолчанию</string>
 
 </resources>
