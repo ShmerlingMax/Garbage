@@ -3,27 +3,20 @@ package com.example.garbagekings;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.garbagekings.Modules.Order;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CreateOrderActivity extends AppCompatActivity {
 
-    Button btnConfirmOrder;
-    FirebaseDatabase db;
-
-    private DocumentReference mDocRef = FirebaseFirestore.getInstance().document("orders/order");
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +33,25 @@ public class CreateOrderActivity extends AppCompatActivity {
         String garbageType = garbageTypeText.getText().toString();
         String comment = commentText.getText().toString();
 
-        Map<String, Object> dateToSave = new HashMap<>();
-        dateToSave.put("address", address);
-        dateToSave.put("garbage_type", garbageType);
-        dateToSave.put("comment", comment);
-        mDocRef.set(dateToSave).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d("Order", "Order has been saved");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w("Order", "Order was not saved");
-            }
-        });
+        Order order = new Order(address, garbageType, comment);
+        db.collection("orders")
+                .add(order)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("Order", "Order has been saved");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Order", "Order was not saved");
+                    }
+                });
+    }
+
+    public void cancel(View view) {
+        //startActivity(new Intent(com.example.garbagekings.CreateOrderActivity.this, com.example.garbagekings.SettingsActivity.class));
+        //onBackPressed();
     }
 }
