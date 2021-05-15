@@ -69,5 +69,7 @@
     <string name="dark_mode">Тёмная</string>
     <string name="light_mode">Светалая</string>
     <string name="android_theme_mode">По умолчанию</string>
+    <string name="search">поиск</string>
+    <string name="order">Заказать</string>
 
 </resources>

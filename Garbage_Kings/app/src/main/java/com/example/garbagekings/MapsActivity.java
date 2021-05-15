@@ -2,6 +2,7 @@ package com.example.garbagekings;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -19,6 +20,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,6 +80,8 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
     private RecyclerView recyclerView;
     private EditText locationSearch;
     private ImageButton searchButton;
+    private ImageButton orderButton;
+    private Marker currentMarker;
     private View mapElement;
     Boolean markerClick = false;
 
@@ -108,6 +113,8 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
         locationSearch = (EditText) view.findViewById(R.id.editText);
         mAutoCompleteAdapter.setEditText(locationSearch);
         searchButton = (ImageButton) view.findViewById(R.id.search_button);
+        orderButton= (ImageButton) view.findViewById(R.id.orderButton);
+        orderButton.setVisibility(View.GONE);
         mapElement = view.findViewById(R.id.mapElement);
     }
 
@@ -181,7 +188,8 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
 
                 // Placing a marker on the touched position
                 markerOptions.draggable(true);
-                googleMap.addMarker(markerOptions);
+                currentMarker = googleMap.addMarker(markerOptions);
+                orderButton.setVisibility(View.VISIBLE);
                 markerClick = false;
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 try {
@@ -196,6 +204,32 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
             }
 
 
+        });
+
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Address> addressList = null;
+                Geocoder geocoder = new Geocoder(getActivity());
+                try {
+                    addressList = geocoder.getFromLocation(currentMarker.getPosition().latitude,
+                            currentMarker.getPosition().longitude, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (addressList != null && !addressList.isEmpty()) {
+                    Address address = addressList.get(0);
+                    String postalCode = (address.getPostalCode() != null)? address.getPostalCode() : "";
+                    String countryName = (address.getCountryName() != null)? ", " + address.getCountryName(): "";
+                    String locality = (address.getLocality() != null)? ", " + address.getLocality(): "";
+                    String thoroughfare = (address.getThoroughfare() != null)? ", " + address.getThoroughfare(): "";
+                    String subThoroughfare = (address.getSubThoroughfare() != null)? ", " + address.getSubThoroughfare(): "";
+                    String stringAddress = postalCode + countryName + locality + thoroughfare + subThoroughfare;
+                    Intent intent = new Intent(getActivity(), CreateOrderActivity.class);
+                    intent.putExtra("address", stringAddress);
+                    startActivity(intent);
+                }
+            }
         });
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -245,12 +279,14 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
                         mMap.clear();
                         if (thoroughfare.equals("") && subThoroughfare.equals(""))
                         {
-                            mMap.addMarker(new MarkerOptions().position(latLng).draggable(true).title(address.getLocality()));
+                            currentMarker = mMap.addMarker(new MarkerOptions().position(latLng).draggable(true).title(address.getLocality()));
                             markerClick = false;
+                            orderButton.setVisibility(View.VISIBLE);
                         }
                         else {
-                            mMap.addMarker(new MarkerOptions().position(latLng).draggable(true).title(thoroughfare + subThoroughfare));
+                            currentMarker = mMap.addMarker(new MarkerOptions().position(latLng).draggable(true).title(thoroughfare + subThoroughfare));
                             markerClick = false;
+                            orderButton.setVisibility(View.VISIBLE);
                         }
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
                     }
