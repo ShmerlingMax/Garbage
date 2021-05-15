@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.garbagekings.Modules.Order;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -34,7 +35,9 @@ public class CreateOrderActivity extends AppCompatActivity {
         String comment = commentText.getText().toString();
 
         Order order = new Order(address, garbageType, comment);
-        db.collection("orders")
+        String id = FirebaseAuth.getInstance().getUid();
+
+        db.collection("users").document(id).collection("orders")
                 .add(order)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

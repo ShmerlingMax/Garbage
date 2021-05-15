@@ -4,9 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.garbagekings.Modules.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -21,15 +22,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.rengwuxian.materialedittext.MaterialEditText;
-
-import com.example.garbagekings.Modules.User;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnSignIn, btnRegistration;
     FirebaseAuth auth;
     FirebaseDatabase db;
+    FirebaseFirestore db_fs = FirebaseFirestore.getInstance();
     DatabaseReference users;
 
     RelativeLayout root;
@@ -182,6 +183,22 @@ public class MainActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                               Snackbar.make(root, "Вы успешно зарегистрировались!", Snackbar.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                
+                                String id = auth.getUid();
+                                db_fs.collection("users").document(id)
+                                        .set(user)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("User", "User has been saved");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("User", "User was not saved");
                                             }
                                         });
                             }
