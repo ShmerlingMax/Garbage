@@ -4,26 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animationCache="true"
+    android:clickable="true"
     tools:context=".CreateOrderActivity">
 
     <TextView
         android:id="@+id/addressLabel"
         android:layout_width="0dp"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="@string/address_label"
+        android:textSize="18sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/address"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:hint="@string/enter_address"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/addressLabel" />
@@ -31,41 +35,32 @@
     <TextView
         android:id="@+id/garbageTypeLabel"
         android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:text="@string/garbage_type_label"
+        android:textSize="18sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/address" />
 
-    <EditText
-        android:id="@+id/garbageType"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:hint="@string/enter_garbage_type"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/garbageTypeLabel" />
-
     <TextView
         android:id="@+id/commentLabel"
         android:layout_width="0dp"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/comment_label"
+        android:textSize="18sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/garbageType" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxGlass" />
 
     <EditText
         android:id="@+id/comment"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="24dp"
         android:hint="@string/enter_comment"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -76,22 +71,49 @@
         android:id="@+id/btnConfirmOrder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:onClick="saveOrder"
         android:text="@string/confirm_order"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/comment" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="168dp"
         android:layout_height="48dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:onClick="cancel"
         android:text="ОТМЕНА"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnConfirmOrder"
-        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkBoxPaper"
+        android:layout_width="131dp"
+        android:layout_height="48dp"
+        android:text="@string/paper"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comment" />
+        app:layout_constraintTop_toBottomOf="@+id/garbageTypeLabel" />
+
+    <CheckBox
+        android:id="@+id/checkBoxGlass"
+        android:layout_width="131dp"
+        android:layout_height="47dp"
+        android:text="@string/glass"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxPlastic" />
+
+    <CheckBox
+        android:id="@+id/checkBoxPlastic"
+        android:layout_width="131dp"
+        android:layout_height="49dp"
+        android:text="@string/plastic"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxPaper" />
 </androidx.constraintlayout.widget.ConstraintLayout>

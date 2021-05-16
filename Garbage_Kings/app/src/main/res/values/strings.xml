@@ -71,5 +71,8 @@
     <string name="android_theme_mode">По умолчанию</string>
     <string name="search">поиск</string>
     <string name="order">Заказать</string>
+    <string name="paper">Бумага</string>
+    <string name="glass">Стекло</string>
+    <string name="plastic">Пластик</string>
 
 </resources>
