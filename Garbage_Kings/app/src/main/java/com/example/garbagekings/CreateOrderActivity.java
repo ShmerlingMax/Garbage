@@ -1,8 +1,12 @@
 package com.example.garbagekings;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -75,7 +79,19 @@ public class CreateOrderActivity extends AppCompatActivity {
         String id = FirebaseAuth.getInstance().getUid();
 
         if (!paperBox.isChecked() && !glassBox.isChecked() && !plasticBox.isChecked()) {
-            Snackbar.make(view, "Выберите тип мусора", Snackbar.LENGTH_SHORT).show();
+            Snackbar mSnackbar = Snackbar.make(view, "Выберите тип мусора", Snackbar.LENGTH_SHORT);
+            View mView = mSnackbar.getView();
+            Snackbar.SnackbarLayout lp = (Snackbar.SnackbarLayout) mView;
+            lp.setForegroundGravity(Gravity.CENTER);
+            mView.setBackgroundColor(Color.WHITE);
+            TextView mTextView = (TextView) mView.findViewById(R.id.snackbar_text);
+            mTextView.setTextColor(Color.BLACK);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                mTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            else
+                mTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+
+            mSnackbar.show();
             return;
         }
 
@@ -95,14 +111,10 @@ public class CreateOrderActivity extends AppCompatActivity {
                         }
                     });
         }
-
-        //Изменить на список заказов
-        startActivity(new Intent(com.example.garbagekings.CreateOrderActivity.this, com.example.garbagekings.MenuActivity.class));
         onBackPressed();
     }
 
     public void cancel(View view) {
-        startActivity(new Intent(com.example.garbagekings.CreateOrderActivity.this, com.example.garbagekings.MenuActivity.class));
         onBackPressed();
     }
 }

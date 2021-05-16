@@ -19,7 +19,8 @@
                 android:layout_height="35dp"
                 android:layout_weight="4"
                 android:hint="@string/search"
-                android:textColor="@color/black"
+                android:textColor="@color/place_autocomplete_search_text"
+                android:textColorHint="@color/place_autocomplete_search_hint"
                 android:background="@drawable/search_back"
                 android:inputType="textPostalAddress"
                 android:drawableStart="@drawable/places_ic_search" />
@@ -62,7 +63,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/order"
-            android:foreground="@drawable/ic_garbage_truck"/>
+            android:foreground="@drawable/ic_garbage_truck" />
 
 </RelativeLayout>
 </LinearLayout>
