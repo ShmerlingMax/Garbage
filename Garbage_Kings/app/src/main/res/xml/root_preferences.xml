@@ -6,9 +6,28 @@
 
     </PreferenceCategory>
     <EditTextPreference
-        app:key="change_password"
+        android:key="change_password"
         app:singleLine="true"
+        android:inputType="textPassword"
         app:title="@string/password_change" />
+    <EditTextPreference
+        app:key="name_change"
+        app:singleLine="true"
+        app:title="@string/name_change" />
+    <EditTextPreference
+        app:key="last_name_change"
+        app:singleLine="true"
+        app:title="@string/last_name_change" />
+    <EditTextPreference
+        app:key="email_change"
+        app:singleLine="true"
+        app:title="@string/email_change" />
+    <EditTextPreference
+        android:defaultValue="false"
+        android:inputType="phone"
+        app:key="phone_number_change"
+        app:singleLine="true"
+        app:title="@string/phone_number_change" />
     <PreferenceCategory app:title="@string/screen_header">
 
         <ListPreference
