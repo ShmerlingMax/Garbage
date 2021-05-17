@@ -13,6 +13,7 @@
     <EditTextPreference
         app:key="name_change"
         app:singleLine="true"
+            android:defaultValue=""
         app:title="@string/name_change" />
     <EditTextPreference
         app:key="last_name_change"
@@ -23,7 +24,7 @@
         app:singleLine="true"
         app:title="@string/email_change" />
     <EditTextPreference
-        android:defaultValue="false"
+        android:defaultValue=""
         android:inputType="phone"
         app:key="phone_number_change"
         app:singleLine="true"

@@ -53,10 +53,9 @@ public class ProfileActivity extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-
-                Snackbar.make(v, "Вы вышли из аккаунта", Snackbar.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
 

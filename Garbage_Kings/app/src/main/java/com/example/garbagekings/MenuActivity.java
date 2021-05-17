@@ -84,9 +84,4 @@ public class MenuActivity extends AppCompatActivity implements BottomNavigationV
         }
         return false;
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 }

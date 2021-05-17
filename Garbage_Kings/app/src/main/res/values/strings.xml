@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Garbage Kings</string>
+    <string name="app_name">Винни-ПУХТО</string>
     <string name="app_in_name">Винни-ПУХТО</string>
     <string name="app_name_after"> </string>
     <string name="text_button"> </string>
@@ -61,7 +61,7 @@
     <string name="enter_address">Введите адрес</string>
     <string name="enter_garbage_type">Укажите тип мусора</string>
     <string name="enter_comment">Напишите комментарий</string>
-    <string name="confirm_order">Подтвердить заказ</string>
+    <string name="confirm_order">ПОДТВЕРДИТЬ</string>
 
     <!-- Profile performance -->
     <string name="password_change">Изменить пароль</string>
