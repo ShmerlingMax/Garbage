@@ -57,9 +57,7 @@
 
     <!-- Profile performance -->
     <string name="password_change">Изменить пароль</string>
-    <string name="phoneNumber">Phone number</string>
-    <string name="email">Email</string>
-    <string name="userName">User name</string>
+
 
     <!-- Strings for screen settings -->
 
@@ -78,7 +76,10 @@
     <string name="glass">Стекло</string>
     <string name="plastic">Пластик</string>
     <string name="cancel">cancel</string>
-
+    <string name="logout">Выйти</string>
+    <string name="userName">Имя пользователя</string>
+    <string name="email">Эл. почта</string>
+    <string name="phoneNumber">Номер телефона</string>
 
 
 

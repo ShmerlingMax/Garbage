@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //НАДО УДАЛИТЬ ПРИ ПРОДАКШЕНЕ!!!
-        startActivity(new Intent(com.example.garbagekings.MainActivity.this, com.example.garbagekings.MenuActivity.class));
+        //startActivity(new Intent(com.example.garbagekings.MainActivity.this, com.example.garbagekings.MenuActivity.class));
 
         btnSignIn = findViewById(R.id.btnSignIn);
         btnRegistration = findViewById(R.id.btnRegistration);
