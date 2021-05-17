@@ -57,6 +57,10 @@
 
     <!-- Profile performance -->
     <string name="password_change">Изменить пароль</string>
+    <string name="email_change">Изменить почту</string>
+    <string name="name_change">Изменить имя</string>
+    <string name="last_name_change">Изменить фамилию</string>
+    <string name="phone_number_change">Изменить номер телефона</string>
 
     <!-- Strings for screen settings -->
 
