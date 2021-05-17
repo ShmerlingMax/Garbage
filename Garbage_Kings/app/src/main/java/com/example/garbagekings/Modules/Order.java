@@ -3,10 +3,11 @@ package com.example.garbagekings.Modules;
 public class Order {
     public Order () {};
 
-    public Order(String address, String typeOfGarbage, String comment) {
+    public Order(String address, String typeOfGarbage, String comment, int status) {
         this.address = address;
         this.typeOfGarbage = typeOfGarbage;
         this.comment = comment;
+        this.status = status;
     }
 
     public Order(String address, String typeOfGarbage, String comment, int number, int status, int bonus)

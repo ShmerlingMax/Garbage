@@ -18,6 +18,14 @@
     <string name="create_order">Создать заказ</string>
     <string name="settings">Настройки</string>
     <string name="address">Адрес</string>
+
+    <string name="cancel">Отмена</string>
+    <string name="status">Статус:</string>
+
+    <!-- Strings used for statuses -->
+    <string name="status_waiting"><font color='#47F512'>ожидает</font></string>
+    <string name="status_canceled"><font color='#DE1414'>отменен</font></string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -57,7 +65,13 @@
 
     <!-- Profile performance -->
     <string name="password_change">Изменить пароль</string>
-
+    <string name="phoneNumber">Phone number</string>
+    <string name="email">Email</string>
+    <string name="userName">User name</string>
+    <string name="email_change">Изменить почту</string>
+    <string name="name_change">Изменить имя</string>
+    <string name="last_name_change">Изменить фамилию</string>
+    <string name="phone_number_change">Изменить номер телефона</string>
 
     <!-- Strings for screen settings -->
 
@@ -75,17 +89,8 @@
     <string name="paper">Бумага</string>
     <string name="glass">Стекло</string>
     <string name="plastic">Пластик</string>
-    <string name="cancel">cancel</string>
     <string name="logout">Выйти</string>
-    <string name="userName">Имя пользователя</string>
-    <string name="email">Эл. почта</string>
-    <string name="phoneNumber">Номер телефона</string>
 
 
-
-    <string name="email_change">Изменить почту</string>
-    <string name="name_change">Изменить имя</string>
-    <string name="last_name_change">Изменить фамилию</string>
-    <string name="phone_number_change">Изменить номер телефона</string>
 
 </resources>

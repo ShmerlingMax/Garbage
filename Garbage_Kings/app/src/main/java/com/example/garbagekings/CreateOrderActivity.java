@@ -75,7 +75,7 @@ public class CreateOrderActivity extends AppCompatActivity {
 
         String comment = commentText.getText().toString();
 
-        Order order = new Order(address, garbageType, comment);
+        Order order = new Order(address, garbageType, comment, 0);
         String id = FirebaseAuth.getInstance().getUid();
 
         if (!paperBox.isChecked() && !glassBox.isChecked() && !plasticBox.isChecked()) {
