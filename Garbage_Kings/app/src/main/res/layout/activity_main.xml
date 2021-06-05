@@ -1,76 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:background="@drawable/main_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:id="@+id/rootElement">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootElement"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/search_back"
+    tools:context=".MainActivity">
+
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/emailField"
+        android:layout_width="374dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/text_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginBottom="470dp"
+        android:hint="@string/emailHint"
+        android:inputType="textEmailAddress"
+        android:text=""
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="20sp"
+        app:met_baseColor="@color/text_password_and_email"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@color/logo_color"
+        app:met_singleLineEllipsis="true" />
 
     <LinearLayout
-            android:orientation="vertical"
-            android:layout_marginTop="25dp"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        <TextView
-                android:textSize="35sp"
-                android:textColor="#005C04"
-                android:text="@string/app_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        <TextView
-                android:textSize="15sp"
-                android:textColor="@android:color/white"
-                android:text="@string/app_name_after"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/app_name_after"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <TextView
-            android:id="@+id/text_button"
-            android:textSize="15sp"
-            android:layout_marginBottom="20dp"
-            android:layout_alignParentBottom="true"
-            android:textColor="@color/text_button"
-            android:textAlignment="center"
-            android:layout_centerHorizontal="true"
-            android:text="@string/text_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal" />
+        android:id="@+id/text_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/text_button"
+        android:textAlignment="center"
+        android:textColor="@color/text_button"
+        android:textSize="15sp" />
 
     <LinearLayout
-            android:weightSum="2"
-            android:layout_above="@+id/text_button"
-            android:layout_margin="15dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="25dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/text_button"
+        android:layout_margin="15dp"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-        <Button
-                android:textColor="@android:color/white"
-                android:background="@drawable/btn_sign_in"
-                android:text="@string/btnSignIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnSignIn"
-                android:layout_marginRight="6dp"
-                android:layout_weight="1" />
-
-        <Button
-                android:textColor="@android:color/white"
-                android:background="@drawable/btn_registration"
-                android:text="@string/btnRegistration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnRegistration"
-                android:layout_marginLeft="6dp"
-                android:layout_weight="1" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/green_dog"
+        android:layout_width="173dp"
+        android:layout_height="108dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="89dp"
+        app:srcCompat="@drawable/green_dog_logo" />
+
+    <ImageView
+        android:id="@+id/eco_technology"
+        android:layout_width="173dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="162dp"
+        app:srcCompat="@drawable/eco_techtonlogy_logo" />
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="173dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="301dp"
+        android:layout_weight="1"
+        android:background="@color/logo_color"
+        android:text="@string/btnSignIn"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/btnRegistration"
+        android:layout_width="173dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="6dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="300dp"
+        android:layout_weight="1"
+        android:background="@color/logo_color"
+        android:text="@string/btnRegistration"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/text_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:layout_marginBottom="581dp"
+        android:fontFamily="@font/rubik_mono_one"
+        android:text="@string/app_name"
+        android:textColor="#ABCD1E"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/supportedBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/text_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:layout_marginBottom="211dp"
+        android:fontFamily="@font/autour_one"
+        android:text="@string/supportedBy"
+        android:textColor="@color/text_password_and_email"
+        android:textSize="15sp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/passwordField"
+        android:layout_width="374dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/text_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="377dp"
+        android:hint="@string/passwordHint"
+        android:inputType="textPassword"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/black"
+        android:textSize="20sp"
+        app:met_baseColor="@color/text_password_and_email"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@color/logo_color"
+        app:met_singleLineEllipsis="true" />
+
 </RelativeLayout>

@@ -73,25 +73,47 @@ public class MainActivity extends AppCompatActivity {
 
     private void showSignInWindow()
     {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        /*AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Вход");
         dialog.setMessage("Введите данные для входа");
 
         LayoutInflater inflater = LayoutInflater.from(this);
         View signInWindow = inflater.inflate(R.layout.sign_in_window, null);
-        dialog.setView(signInWindow);
+        dialog.setView(signInWindow);*/
 
-        final MaterialEditText email = signInWindow.findViewById(R.id.emailField);
-        final MaterialEditText password = signInWindow.findViewById(R.id.passwordField);
+        final MaterialEditText email = findViewById(R.id.emailField);
+        final MaterialEditText password = findViewById(R.id.passwordField);
 
-        dialog.setNegativeButton("Отменить", new DialogInterface.OnClickListener() {
+        /*dialog.setNegativeButton("Отменить", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 dialogInterface.dismiss();
             }
-        });
+        });*/
 
-        dialog.setPositiveButton("Войти", new DialogInterface.OnClickListener()
+        if (TextUtils.isEmpty(email.getText().toString())) {
+            Snackbar.make(root, "Введите адрес электронной почты", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        if (password.getText().toString().length() < 8) {
+            Snackbar.make(root, "Введите пароль, который больше 8 символов", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        auth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        startActivity(new Intent(com.example.garbagekings.MainActivity.this, com.example.garbagekings.MenuActivity.class));
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Snackbar.make(root, "Ошибка входа", Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+        /*dialog.setPositiveButton("Войти", new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface dialogInterface, int which)
@@ -120,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                         });
             }
         });
-        dialog.show();
+        dialog.show();*/
 
     }
 

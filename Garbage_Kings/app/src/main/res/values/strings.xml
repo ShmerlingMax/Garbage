@@ -18,6 +18,8 @@
     <string name="create_order">Создать заказ</string>
     <string name="settings">Настройки</string>
     <string name="address">Адрес</string>
+    <string name="supportedBy">При поддержке:</string>
+
 
     <string name="cancel">Отмена</string>
     <string name="status">Статус:</string>
