@@ -11,4 +11,7 @@
     <color name="ripple_effect">#03fcc0</color>
     <color name="btnSignIn">#1c03fc</color>
     <color name="btnRegistration">#f91091</color>
+    <color name="logo_color">#ABCD1E</color>
+    <color name="logo_color_techonolgy">#7BE502</color>
+    <color name="text_password_and_email">#878980</color>
 </resources>
