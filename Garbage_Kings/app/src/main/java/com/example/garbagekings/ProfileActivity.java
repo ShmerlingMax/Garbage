@@ -31,6 +31,7 @@ public class ProfileActivity extends Fragment {
     TextView mUserName;
     TextView mEmail;
     TextView mPhoneNumber;
+    TextView bonus;
     Button btnSettings;
     Button logoutButton;
 
@@ -62,6 +63,7 @@ public class ProfileActivity extends Fragment {
         mUserName = v.findViewById(R.id.tvUserName);
         mEmail = v.findViewById(R.id.tvEmail);
         mPhoneNumber = v.findViewById(R.id.tvPhoneNumber);
+        bonus = v.findViewById(R.id.bonus);
 
         String id = FirebaseAuth.getInstance().getUid();
         if (id == null) {
@@ -82,6 +84,7 @@ public class ProfileActivity extends Fragment {
                                 mUserName.setText(currentUser.getName());
                                 mEmail.setText(currentUser.getEmail());
                                 mPhoneNumber.setText(currentUser.getPhone());
+                                bonus.setText(currentUser.getBonus()+"");
                             }
                         }
                     });

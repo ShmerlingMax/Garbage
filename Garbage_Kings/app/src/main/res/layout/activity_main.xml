@@ -71,31 +71,31 @@
 
     <ImageView
         android:id="@+id/green_dog"
-        android:layout_width="173dp"
+        android:layout_width="165dp"
         android:layout_height="108dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="12dp"
         android:layout_marginBottom="89dp"
         app:srcCompat="@drawable/green_dog_logo" />
 
     <ImageView
         android:id="@+id/eco_technology"
-        android:layout_width="173dp"
+        android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="162dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="130dp"
         app:srcCompat="@drawable/eco_techtonlogy_logo" />
 
     <Button
         android:id="@+id/btnSignIn"
-        android:layout_width="173dp"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
@@ -110,7 +110,7 @@
 
     <Button
         android:id="@+id/btnRegistration"
-        android:layout_width="173dp"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -135,7 +135,7 @@
         android:fontFamily="@font/rubik_mono_one"
         android:text="@string/app_name"
         android:textColor="#ABCD1E"
-        android:textSize="35sp" />
+        android:textSize="32sp" />
 
     <TextView
         android:id="@+id/supportedBy"

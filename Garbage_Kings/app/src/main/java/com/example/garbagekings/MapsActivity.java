@@ -59,7 +59,12 @@ import com.google.android.libraries.places.api.model.Place;
 import com.example.garbagekings.R;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class MapsActivity extends Fragment implements OnMapReadyCallback, PlacesAutoCompleteAdapter.ClickListener {
@@ -182,7 +187,9 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
                 }
 
                 // Clears the previously touched position
-                googleMap.clear();
+                if (currentMarker != null) {
+                    currentMarker.remove();
+                }
 
                 // Animating to the touched position
                 googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -293,7 +300,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
                     }
                     else
                     {
-                        Snackbar mSnackbar = Snackbar.make(mapElement, "Не удалось найти адресс", Snackbar.LENGTH_SHORT);
+                        Snackbar mSnackbar = Snackbar.make(mapElement, "Не удалось найти адрес", Snackbar.LENGTH_SHORT);
                         View mView = mSnackbar.getView();
                         Snackbar.SnackbarLayout lp = (Snackbar.SnackbarLayout) mView;
                         lp.setForegroundGravity(Gravity.CENTER);
@@ -310,7 +317,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
                 }
                 else
                 {
-                    Snackbar mSnackbar = Snackbar.make(mapElement, "Не удалось найти адресс", Snackbar.LENGTH_SHORT);
+                    Snackbar mSnackbar = Snackbar.make(mapElement, "Не удалось найти адрес", Snackbar.LENGTH_SHORT);
                     View mView = mSnackbar.getView();
                     Snackbar.SnackbarLayout lp = (Snackbar.SnackbarLayout) mView;
                     lp.setForegroundGravity(Gravity.CENTER);
@@ -387,7 +394,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
                     }
                     else
                     {
-                        Snackbar mSnackbar = Snackbar.make(mapElement, "Не удалось найти адресс", Snackbar.LENGTH_SHORT);
+                        Snackbar mSnackbar = Snackbar.make(mapElement, "Не удалось найти адрес", Snackbar.LENGTH_SHORT);
                         View mView = mSnackbar.getView();
                         Snackbar.SnackbarLayout lp = (Snackbar.SnackbarLayout) mView;
                         lp.setForegroundGravity(Gravity.CENTER);
@@ -404,7 +411,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback, Places
                 }
                 else
                 {
-                    Snackbar mSnackbar = Snackbar.make(mapElement, "Не удалось найти адресс", Snackbar.LENGTH_SHORT);
+                    Snackbar mSnackbar = Snackbar.make(mapElement, "Не удалось найти адрес", Snackbar.LENGTH_SHORT);
                     View mView = mSnackbar.getView();
                     Snackbar.SnackbarLayout lp = (Snackbar.SnackbarLayout) mView;
                     lp.setForegroundGravity(Gravity.CENTER);
